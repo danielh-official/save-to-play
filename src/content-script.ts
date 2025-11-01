@@ -218,9 +218,9 @@ export async function saveToLocalDatabase(videoInfo: YouTubeVideoInfo) {
       second_url: videoInfo.url,
       channel: videoInfo.channelName
         ? {
-          id: videoInfo.channelUrl?.split('/').pop() || '',
-          name: videoInfo.channelName,
-        }
+            id: videoInfo.channelUrl?.split('/').pop() || '',
+            name: videoInfo.channelName,
+          }
         : undefined,
       duration_seconds: videoInfo.duration,
       source: 'YouTube',
