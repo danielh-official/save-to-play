@@ -13,6 +13,11 @@ chrome.runtime.onInstalled.addListener(async () => {
 
 // Handle messages from content script and popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (sender.id !== chrome.runtime.id) {
+    console.warn('Received message from unknown sender:', sender);
+    return;
+  }
+
   switch (request.action) {
     case 'saveVideo':
       handleSaveVideo(request.data, sendResponse);

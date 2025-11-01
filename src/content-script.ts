@@ -218,9 +218,9 @@ export async function saveToLocalDatabase(videoInfo: YouTubeVideoInfo) {
       second_url: videoInfo.url,
       channel: videoInfo.channelName
         ? {
-            id: videoInfo.channelUrl?.split('/').pop() || '',
-            name: videoInfo.channelName,
-          }
+          id: videoInfo.channelUrl?.split('/').pop() || '',
+          name: videoInfo.channelName,
+        }
         : undefined,
       duration_seconds: videoInfo.duration,
       source: 'YouTube',
@@ -673,6 +673,11 @@ console.log('Content script loaded on:', window.location.href);
 
 // Handle messages from background script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (sender.id !== chrome.runtime.id) {
+    sendResponse({ success: false, error: 'Unauthorized sender' });
+    return;
+  }
+
   switch (request.action) {
     case 'readClipboard':
       handleReadClipboard(sendResponse);
